@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import torch
-from aaev2.data_handlers.VocabularyHandler import VocabularyHandler
-from aaev2.data_handlers.POS_data_handler import POS_data_handler
-from aaev2.data_handlers.Chunking_data_handler import Chunking_data_handler
+from data_handlers.VocabularyHandler import VocabularyHandler
+from data_handlers.POS_data_handler import POS_data_handler
+from data_handlers.Chunking_data_handler import Chunking_data_handler
 
-from aaev2.modules.Word_embedding_module import Word_embedding_module
-from aaev2.modules.POS_module import POS_module
-from aaev2.modules.Chunking_module import Chunking_module
+from modules.Word_embedding_module import Word_embedding_module
+from modules.POS_module import POS_module
+from modules.Chunking_module import Chunking_module
 
-import aaev2.misc_functions as misc_functions
-import aaev2.train_and_test_functions as train_and_test_functions
+import misc_functions as misc_functions
+import train_and_test_functions as train_and_test_functions
 
 import random
 import numpy as np
@@ -18,7 +18,7 @@ import copy
 import os
 import time
 
-from aaev2.data_handlers.Dep_parsing_handler import Dep_parsing_handler
+from data_handlers.Dep_parsing_handler import Dep_parsing_handler
 
 random.seed(10)
 np.random.seed(10)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from aaev2.data_handlers.Abstract_data_handler import Abstract_data_handler
+from data_handlers.Abstract_data_handler import Abstract_data_handler
 
 import io
 import random

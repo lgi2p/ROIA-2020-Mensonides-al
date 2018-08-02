@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from aaev2.modules.Abstract_module import Abstract_module
+from modules.Abstract_module import Abstract_module
 
 import torch
 from torch.autograd import Variable
@@ -47,11 +47,11 @@ class Chunking_module(Abstract_module):
 
         self.fc = nn.Linear(
             in_features= 2*self.rnn_hidden_dim,
-            out_features=2*self.rnn_hidden_dim
+            out_features= self.rnn_hidden_dim
         )
 
         self.logits = nn.Linear(
-            in_features= 2*self.rnn_hidden_dim,
+            in_features= self.rnn_hidden_dim,
             out_features= self.nb_classes
         )
 
@@ -120,11 +120,12 @@ class Chunking_module(Abstract_module):
             x_max_length= x_max_length,
             batch_size = batch_size
         )
+        weighted_pos_label_embedding = torch.nn.functional.dropout(weighted_pos_label_embedding, p=0.4, training=self.training)
 
         #concat inputs
-        inputs = torch.cat((x_embedded, pos_rnn_hidden_states, weighted_pos_label_embedding), 2)
-        #dropout
+        inputs = torch.cat((x_embedded, pos_rnn_hidden_states), 2)
         inputs = torch.nn.functional.dropout(inputs, p=self.dropout_rate, training=self.training)
+        inputs = torch.cat((inputs, weighted_pos_label_embedding), 2)
 
         # rnn
         packed_input = torch.nn.utils.rnn.pack_padded_sequence(inputs, lengths=x_lengths, batch_first=True)

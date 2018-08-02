@@ -1,6 +1,6 @@
 
 import torch
-import aaev2.misc_functions as misc_functions
+import misc_functions as misc_functions
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
 import copy

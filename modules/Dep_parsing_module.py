@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from aaev2.modules.Abstract_module import Abstract_module
+from modules.Abstract_module import Abstract_module
 
 import torch
 from torch.autograd import Variable
@@ -35,7 +35,8 @@ class Dep_parsing_module(Abstract_module):
         rnn_input_size = self.chunking_module.pos_module.word_embedding_module.word_embeddings.embedding_dim \
                          + 2*self.chunking_module.pos_module.rnn_hidden_dim \
                          + self.chunking_module.pos_label_embedding_handler.embedding_dimension\
-                         + 2*self.chunking_module.rnn_hidden_dim+ self.chunking_label_embedding_handler.embedding_dimension
+                         + 2*self.chunking_module.rnn_hidden_dim\
+                         + self.chunking_label_embedding_handler.embedding_dimension
 
         self.rnn = nn.LSTM(
             input_size= rnn_input_size,
@@ -48,7 +49,7 @@ class Dep_parsing_module(Abstract_module):
 
         self.linear_head = nn.Linear(
             in_features= 2*self.rnn_hidden_dim,
-            out_features=2*self.rnn_hidden_dim,
+            out_features= 2*self.rnn_hidden_dim,
             bias=False
         )
 
@@ -56,11 +57,11 @@ class Dep_parsing_module(Abstract_module):
 
         self.fc_relation_heads = nn.Linear(
             in_features= 4*self.rnn_hidden_dim,
-            out_features=2*self.rnn_hidden_dim
+            out_features= self.rnn_hidden_dim
         )
 
         self.logits_relation_heads = nn.Linear(
-            in_features= 2*self.rnn_hidden_dim,
+            in_features= self.rnn_hidden_dim,
             out_features= self.nb_classes
         )
 
@@ -145,11 +146,13 @@ class Dep_parsing_module(Abstract_module):
             x_max_length= x_max_length,
             batch_size = batch_size
         )
+        chunking_weighted_label_embedding = torch.nn.functional.dropout(chunking_weighted_label_embedding, p=0.4, training=self.training)
+        pos_weighted_label_embedding = torch.nn.functional.dropout(pos_weighted_label_embedding, p=0.4, training=self.training)
 
         #concat inputs
-        inputs = torch.cat((x_embedded, pos_rnn_hidden_states, pos_weighted_label_embedding, chunking_rnn_hidden_states, chunking_weighted_label_embedding), 2)
-        #dropout
+        inputs = torch.cat((x_embedded, pos_rnn_hidden_states, chunking_rnn_hidden_states), 2)
         inputs = torch.nn.functional.dropout(inputs, p=self.dropout_rate, training=self.training)
+        inputs = torch.cat((inputs, pos_weighted_label_embedding, chunking_weighted_label_embedding), 2)
 
         # rnn
         packed_input = torch.nn.utils.rnn.pack_padded_sequence(inputs, lengths=x_lengths, batch_first=True)
@@ -166,7 +169,7 @@ class Dep_parsing_module(Abstract_module):
 
         # compute wd_hj
         wd_hj = self.linear_head(fhs)
-        wd_hj = wd_hj.contiguous().view(batch_size, x_max_length, 2 * self.rnn_hidden_dim)
+        wd_hj = wd_hj.contiguous().view(batch_size, x_max_length, 2*self.rnn_hidden_dim)
 
         #compute root and prepend root
         wd_r = self.linear_head(self.root_param_vector)

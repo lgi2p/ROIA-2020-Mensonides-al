@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from aaev2.modules.Abstract_module import Abstract_module
+from modules.Abstract_module import Abstract_module
 
 import torch
 from torch.autograd import Variable
@@ -35,11 +35,11 @@ class POS_module(Abstract_module):
 
         self.fc = nn.Linear(
             in_features= 2*self.rnn_hidden_dim,
-            out_features=2*self.rnn_hidden_dim
+            out_features= self.rnn_hidden_dim
         )
 
         self.logits = nn.Linear(
-            in_features= 2*self.rnn_hidden_dim,
+            in_features= self.rnn_hidden_dim,
             out_features= self.nb_classes
         )
 
