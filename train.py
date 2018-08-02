@@ -182,29 +182,29 @@ for num_epoch in range(1000):
         print('chunking')
         print (param_group['lr'])
 
-    # ############
-    # # Pos training
-    # ############
-    # pos_train_metrics = train_and_test_functions.train_pos_layer(train_POS_data_handler, pos_optimizer, pos_module, grad_clip_max=1.0)
-    # pos_test_metrics = train_and_test_functions.test_pos_layer(test_POS_data_handler, pos_module)
-    # print ('##############################')
-    # print ('POS: end of epoch ' + str(train_POS_data_handler.num_epoch))
-    # misc_functions.do_print_results('train', pos_train_metrics)
-    # misc_functions.do_print_results('test', pos_test_metrics)
-    # misc_functions.save_logs(os.path.join('./logs', start_time), 'pos_train', pos_train_metrics, train_POS_data_handler.num_epoch)
-    # misc_functions.save_logs(os.path.join('./logs', start_time), 'pos_test', pos_test_metrics, test_POS_data_handler.num_epoch)
-    #
-    # ###########
-    # # Chunking training
-    # ###########
-    # chunking_train_metrics = train_and_test_functions.train_pos_layer(train_chunking_data_handler, chunking_optimizer, chunking_module, grad_clip_max=2.0)
-    # chunking_test_metrics = train_and_test_functions.test_pos_layer(test_chunking_data_handler, chunking_module)
-    # print ('##############################')
-    # print ('chunking: end of epoch ' + str(train_chunking_data_handler.num_epoch))
-    # misc_functions.do_print_results('train', chunking_train_metrics)
-    # misc_functions.do_print_results('test', chunking_test_metrics)
-    # misc_functions.save_logs(os.path.join('./logs', start_time), 'chunking_train', chunking_train_metrics, train_chunking_data_handler.num_epoch)
-    # misc_functions.save_logs(os.path.join('./logs', start_time), 'chunking_test', chunking_test_metrics, test_chunking_data_handler.num_epoch)
+    ############
+    # Pos training
+    ############
+    pos_train_metrics = train_and_test_functions.train_pos_layer(train_POS_data_handler, pos_optimizer, pos_module, grad_clip_max=1.0)
+    pos_test_metrics = train_and_test_functions.test_pos_layer(test_POS_data_handler, pos_module)
+    print ('##############################')
+    print ('POS: end of epoch ' + str(train_POS_data_handler.num_epoch))
+    misc_functions.do_print_results('train', pos_train_metrics)
+    misc_functions.do_print_results('test', pos_test_metrics)
+    misc_functions.save_logs(os.path.join('./logs', start_time), 'pos_train', pos_train_metrics, train_POS_data_handler.num_epoch)
+    misc_functions.save_logs(os.path.join('./logs', start_time), 'pos_test', pos_test_metrics, test_POS_data_handler.num_epoch)
+
+    ###########
+    # Chunking training
+    ###########
+    chunking_train_metrics = train_and_test_functions.train_pos_layer(train_chunking_data_handler, chunking_optimizer, chunking_module, grad_clip_max=2.0)
+    chunking_test_metrics = train_and_test_functions.test_pos_layer(test_chunking_data_handler, chunking_module)
+    print ('##############################')
+    print ('chunking: end of epoch ' + str(train_chunking_data_handler.num_epoch))
+    misc_functions.do_print_results('train', chunking_train_metrics)
+    misc_functions.do_print_results('test', chunking_test_metrics)
+    misc_functions.save_logs(os.path.join('./logs', start_time), 'chunking_train', chunking_train_metrics, train_chunking_data_handler.num_epoch)
+    misc_functions.save_logs(os.path.join('./logs', start_time), 'chunking_test', chunking_test_metrics, test_chunking_data_handler.num_epoch)
 
     ###########
     # dep_parsing training
