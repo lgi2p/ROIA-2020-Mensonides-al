@@ -88,7 +88,7 @@ train_dep_parsing_data_handler = Dep_parsing_handler(
                               'data/dep_parsing/UD_English-ParTUT/en_partut-ud-train.conllu',],
     label_to_id_file= 'data/dep_parsing/dep_parsing_labels_to_id.txt',
     vocabulary_handler = vocabulary_handler,
-    batch_size= 200
+    batch_size= 100
 )
 
 # train_dep_parsing_data_handler = Dep_parsing_handler(
@@ -105,7 +105,7 @@ test_dep_parsing_data_handler = Dep_parsing_handler(
                               'data/dep_parsing/UD_English-ParTUT/en_partut-ud-test.conllu',],
     label_to_id_file= 'data/dep_parsing/dep_parsing_labels_to_id.txt',
     vocabulary_handler = vocabulary_handler,
-    batch_size= 200
+    batch_size= 100
 )
 
 # test_dep_parsing_data_handler = Dep_parsing_handler(
