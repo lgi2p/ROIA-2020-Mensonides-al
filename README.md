@@ -1,6 +1,6 @@
 # ROIA 2020
 
-Code source et données du papier "Analyse Automatique d'Arguments et Apprentissage Multi-Tâches : un Cas d'Etude" proposé Mensonides et al. à ROIA 2020.
+Code source et données du papier "Analyse Automatique d'Arguments et Apprentissage Multi-Tâches : un Cas d'Etude" proposé par Mensonides et al. à ROIA 2020.
 
 Auteur : Jean-Christophe Mensonides
 
